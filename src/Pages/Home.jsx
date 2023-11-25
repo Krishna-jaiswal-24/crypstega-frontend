@@ -1,11 +1,11 @@
 import React from "react";
-import Navbar from "../components/Navbar";
 import { Cards } from "../Components/Cards";
+import Navbar from "../components/Navbar";
 import Uploads from "../components/Uploads";
 
 const Home = () => {
   return (
-    <div>
+    <div className="bg">
       <Navbar />
       <div className="flex justify-between flex-auto p-12 ">
         <div className="w-8/12">

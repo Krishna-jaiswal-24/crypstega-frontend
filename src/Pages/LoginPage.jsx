@@ -1,11 +1,16 @@
 import axios from "axios";
 import React, { useState } from "react";
+import {
+  useNavigate
+} from "react-router-dom";
+
 
 const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [error, setError] = useState(null);
-  
+  const navigate=useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     console.log("This is", username)
@@ -23,10 +28,16 @@ const LoginForm = () => {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
       console.log("Login successful!");
+      navigate("/home");
+
     } catch (error) {
       // Handle login error
       setError("Invalid username or password");
       console.error("Login error:", error);
+      setPassword("")
+      setUsername("")
+      alert(error)
+      navigate("/")
     }
   };
 
