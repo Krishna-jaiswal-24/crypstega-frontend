@@ -7,10 +7,11 @@
   height: 100vh;
   width: 100vw;
   background: url('./assets/Background.png') no-repeat center center fixed;
+  background-size: cover;
 }
 
 .bg-trans {
-  background:  rgba(217, 217, 217, 0.05);
+  background:  rgba(217, 217, 217, 0.08);
 
 }
 
@@ -18,4 +19,19 @@
   height: 100vh;
   width: 100vw;
   background: url('./assets/Login-bg.png') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.flex.items-center input {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.flex.items-center label {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+.safe-code-input {
+  width: calc(160px + 64px); /* 160px for the label and 64px for the input */
 }

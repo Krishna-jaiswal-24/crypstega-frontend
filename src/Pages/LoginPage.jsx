@@ -1,32 +1,90 @@
-import React, { useState } from "react";
 import axios from "axios";
+import React, { useState } from "react";
 
-const SignupForm = ({ username, setUsername, email, setEmail, password, setPassword, onSubmit }) => {
+const LoginForm = () => {
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [error, setError] = useState(null);
+  
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    console.log("This is", username)
+    console.log("This is pass",password)
+
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/apis/login/", {
+        username,
+        password,
+      });
+
+      const token = response.data.token;
+
+      localStorage.setItem("token", token);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+      console.log("Login successful!");
+    } catch (error) {
+      // Handle login error
+      setError("Invalid username or password");
+      console.error("Login error:", error);
+    }
+  };
+
   return (
     <form className="flex flex-col items-center md:items-start">
       <label className="text-white mt-4">Username</label>
       <input
         type="text"
-        className="p-2 w-max my-2 md:my-4 rounded-md bg-trans"
+        className="p-2 w-64 h-12 my-2 md:my-4 rounded-md bg-trans text-white"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <label className="text-white">Password</label>
+      <input
+        type="password"
+        className="p-2 w-64 h-12 my-2 md:my-4 rounded-md bg-trans text-white"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <button
+        className="p-2 px-16 my-4 bg-purple-700 hover:bg-purple-900 text-white rounded-md focus:outline-none focus:shadow-outline w-64 h-12"
+        onClick={handleLogin}
+        type="submit"
+      >
+        Login
+      </button>
+    </form>
+  );
+};
+
+
+
+const SignupForm = ({ username, setUsername, email, setEmail, password, setPassword, onSubmit }) => {
+  return (
+    <form className="flex flex-col items-center md:items-start">
+      <label className="text-white mt-6">Username</label>
+      <input
+        type="text"
+        className="p-2 w-64 h-12 my-2 md:my-4 rounded-md bg-trans text-white"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
       <label className="text-white mt-4">Email</label>
       <input
         type="email"
-        className="p-2 w-max my-2 md:my-4 rounded-md bg-trans"
+        className="p-2 w-64 h-12 my-2 md:my-4 rounded-md bg-trans text-white"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
-      <label className="text-white">Password</label>
+      <label className="text-white mt-4">Password</label>
       <input
         type="password"
-        className="p-2 my-2 md:my-4 rounded-md bg-trans"
+        className="p-2 w-64 h-12 my-2 md:my-4 rounded-md bg-trans text-white"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
       <button
-        className="p-2 px-16 my-4 bg-purple-700 hover:bg-purple-900 text-white rounded-md focus:outline-none focus:shadow-outline w-max"
+        className="p-2 px-16 my-4 bg-purple-700 hover:bg-purple-900 text-white rounded-md focus:outline-none focus:shadow-outline w-64 h-12"
         onClick={onSubmit}
       >
         Sign Up
@@ -58,54 +116,49 @@ const SwitchLoginRegister = ({ onClick }) => {
   );
 };
 
-const Signup = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+const RightContent = ({ isLogin, onSwitch, children }) => {
+  return (
+    <div className="text-center md:text-left">
+      <h1 className="text-white text-5xl font-bold font-poppins mb-4">
+        {isLogin ? "Login" : "Sign Up"}
+      </h1>
+      {children}
+      <SwitchLoginRegister onClick={onSwitch} />
+    </div>
+  );
+};
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
 
-    try {
-      // Send a POST request to your Django backend with user's email and password
-      const response = await axios.post("http://127.0.0.1:8000/apis/login/", {
-        email,
-        password,
-      });
-
-      // Handle the successful response here
-      console.log("Signup successful:", response.data);
-    } catch (error) {
-      // Handle errors here
-      console.error("Error signing up:", error);
-    }
-  };
-
-  const handleSwitchLoginRegister = () => {
-    // Implement switching to the login form if needed
-  };
-
+const AuthPage = ({ isLogin, onSwitch, onSubmit }) => {
   return (
     <div className="bg-login min-h-screen flex items-center justify-center">
-      <div className="flex flex-col md:flex-row justify-between items-center md:items-start">
-        <MainContent />
-        <div className="text-center md:text-left">
-          <h1 className="text-white text-5xl font-bold font-poppins mb-4">
-            Sign Up
-          </h1>
-          <SignupForm
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            onSubmit={handleFormSubmit}
-            username={username}
-          />
-          <SwitchLoginRegister onClick={handleSwitchLoginRegister} />
-        </div>
+      <MainContent />
+      <div className="flex flex-col md:flex-row justify-between items-center md:items-start ">
+        <RightContent isLogin={isLogin} onSwitch={onSwitch} >
+          {isLogin ? <LoginForm onSubmit={onSubmit} /> : <SignupForm onSubmit={onSubmit} />}
+        </RightContent>
       </div>
     </div>
   );
 };
 
-export default Signup;
+const AuthPageContainer = () => {
+  const [email, setEmail] = useState("");
+
+  const [isLogin, setIsLogin] = useState(false);
+
+  const handleSwitchLoginRegister = () => {
+    setIsLogin((prevIsLogin) => !prevIsLogin);
+  };
+
+  return (
+    <AuthPage
+      isLogin={isLogin}
+      onSwitch={handleSwitchLoginRegister}
+    />
+  );
+};
+
+
+export default AuthPageContainer;
+

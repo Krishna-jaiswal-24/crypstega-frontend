@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
+import Signup from './Pages/LoginPage';
 
 import "./App.css";
-import Home from "./Pages/Home";
-import Login from "./Pages/LoginPage";
 
 function App() {
 
@@ -10,8 +9,8 @@ function App() {
   return (
     <div className="bg">
       {/* Your components go here */}
-      {/* <Login /> */}
-      <Home />
+      <Signup />
+      {/* <Home /> */}
     </div>
   );
 }
