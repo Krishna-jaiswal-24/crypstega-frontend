@@ -6,19 +6,18 @@
 .bg {
   height: 100vh;
   width: 100vw;
-  background: url('./assets/Background.png') no-repeat center center fixed;
+  background: url("./assets/Background.png") no-repeat center center fixed;
   background-size: cover;
 }
 
 .bg-trans {
-  background:  rgba(217, 217, 217, 0.08);
-
+  background: rgba(217, 217, 217, 0.08);
 }
 
 .bg-login {
   height: 100vh;
   width: 100vw;
-  background: url('./assets/Login-bg.png') no-repeat center center fixed;
+  background: url("./assets/Login-bg.png") no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -34,4 +33,8 @@
 
 .safe-code-input {
   width: calc(160px + 64px); /* 160px for the label and 64px for the input */
+}
+
+.uploads {
+  height: 65vh;
 }

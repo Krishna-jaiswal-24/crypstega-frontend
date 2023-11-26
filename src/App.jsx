@@ -1,5 +1,5 @@
 import React from "react";
-import Signup from './Pages/LoginPage';
+import AuthPageContainer from './Pages/AuthPageContainer';
 
 import "./App.css";
 
@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="bg">
       {/* Your components go here */}
-      <Signup />
+      <AuthPageContainer />
       {/* <Home /> */}
     </div>
   );
