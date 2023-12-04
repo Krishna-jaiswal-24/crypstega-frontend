@@ -5,39 +5,49 @@ const Uploads = () => {
   const [file, setFile] = useState(null);
   const [keyImage, setKeyImage] = useState(null);
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [safeCode, setSafeCode] = useState("");
   const [selectedFile, setSelectedFile] = useState('');
 
   const handleFileChange = (event) => {
+    console.log("file", event.target.value)
     const file = event.target.files[0];
+    console.log("file1", file)
     const fileName = file ? file.name : '';
     setSelectedFile(fileName);
     setFile(event.target.files[0]);
   };
 
   const handleKeyImageChange = (event) => {
-    const file = event.target.files[0];
-    const fileName = file ? file.name : '';
-    setKeyImage(fileName);
+    console.log("image", event.target.value)
+    const image = event.target.files[0];
+    console.log("image1", image);
+    const imageName = image ? image.name : '';
+    setKeyImage(image);
+
   };
 
   const handleUpload = async () => {
+
     const formData = new FormData();
+    formData.append("file_name", file);
     formData.append("file", file);
     formData.append("image", keyImage);
-    formData.append("username", name);  // Assuming "name" is the username
-    // formData.append("receiver", email);  // Assuming "email" is the receiver's email
-    // formData.append("file_name", file.name);
+    formData.append("username", name);
+    formData.append('safe_code', safeCode);
+    console.log("This is form data: " + formData);
 
-    const username = "denji";
-    const password = "zxcvbn09876";
-    const basicAuth = btoa(`${username}:${password}`);
+    const jwtToken = localStorage.getItem('token');
+    if (!jwtToken) {
+      console.error("JWT token is missing");
+      return;
+    }
+    console.log(jwtToken)
 
     try {
       const response = await axios.post("http://ekansh515.pythonanywhere.com/apis/encrypt/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          "Authorization": `Basic ${basicAuth}`,
+          "Authorization": `Bearer ${jwtToken}`,
         },
       });
 
@@ -45,6 +55,7 @@ const Uploads = () => {
       console.log(response);
     } catch (error) {
       console.error("Error uploading:", error);
+      alert("File couldn't be uploaded")
     }
   };
 
@@ -98,8 +109,8 @@ const Uploads = () => {
       <input
         type="text"
         placeholder="Safe Code"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        value={safeCode}
+        onChange={(e) => setSafeCode(e.target.value)}
         className="p-2 w-full h-14 md:my-1 rounded-md bg-trans text-white"
       />
 
