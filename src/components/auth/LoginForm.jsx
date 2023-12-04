@@ -12,7 +12,7 @@ const LoginForm = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://127.0.0.1:8000/apis/login/", {
+            const response = await axios.post("http://ekansh515.pythonanywhere.com/apis/login/", {
                 username,
                 password,
             });

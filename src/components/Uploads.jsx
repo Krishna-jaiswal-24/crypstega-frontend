@@ -34,7 +34,7 @@ const Uploads = () => {
     const basicAuth = btoa(`${username}:${password}`);
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/apis/encrypt/", formData, {
+      const response = await axios.post("http://ekansh515.pythonanywhere.com/apis/encrypt/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": `Basic ${basicAuth}`,

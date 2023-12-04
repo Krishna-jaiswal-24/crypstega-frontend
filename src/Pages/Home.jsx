@@ -11,7 +11,7 @@ const Home = () => {
       try {
         const token = localStorage.getItem('token');
         console.log(token);
-        const response = await axios.get("http://127.0.0.1:8000/apis/received_files/", {
+        const response = await axios.get("http://ekansh515.pythonanywhere.com/apis/received_files/", {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
