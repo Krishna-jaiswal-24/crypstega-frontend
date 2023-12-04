@@ -18,9 +18,9 @@ const LoginForm = () => {
             });
 
             const token = response.data.access;
-            console.log(token)
+
             localStorage.setItem("token", token);
-            console.log("Fetched " + localStorage.getItem("token"))
+
             axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
             console.log("Login successful!");

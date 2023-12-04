@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-
+import axios from "axios";
 export const Cards = ({ fileId, receivedData, sender }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
-  const [image, setImage] = useState(null)
+  const [image, setImage] = useState(null);
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -11,47 +11,57 @@ export const Cards = ({ fileId, receivedData, sender }) => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-  const handleFileChange = (event) => {
+  const handleImageChange = (event) => {
     const image = event.target.files[0];
     const imageName = image ? image.name : "";
     setSelectedImage(imageName);
-    setImage(image)
-    setFile(event.target.files[0]);
+    setImage(image);
   };
 
   const handleDecryptAndDownload = async () => {
     // Add logic for decryption and download here
-    const jwtToken = localStorage.getItem('token');
+    const jwtToken = localStorage.getItem("token");
 
     const formData = new FormData();
-    formData.append('file_id', fileId);
-    formData.append('image', image);
-    formData.append('safe_code', document.getElementById('safeCodeInput').value);
+    formData.append("file_id", fileId);
+    formData.append("image", image);
+    formData.append(
+      "safe_code",
+      document.getElementById("safeCodeInput").value
+    );
     try {
       // Make a POST request to the API with axios
-      const response = await axios.post('http://ekansh515.pythonanywhere.com/apis/decrypt/', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${jwtToken}`,
-        },
-      });
-      const responseDate = response.data;
-      const fileBlob = new Blob([responseDate.content])
-      const link = document.createElement('a');
+      const response = await axios.post(
+        "http://ekansh515.pythonanywhere.com/apis/decrypt/",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        }
+      );
+      const responseData = response.data;
+      const fileBlob = new Blob([responseData.content]);
+      const link = document.createElement("a");
       link.href = URL.createObjectURL(fileBlob);
-      link.download = responseData.file_name;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      link.download = responseData.filename;
 
-      alert("Decrypting and downloading...");
-      closeModal();
-
+      // Use Promise to ensure file creation is complete before download
+      new Promise((resolve) => {
+        document.body.appendChild(link);
+        resolve();
+      }).then(() => {
+        link.click();
+        document.body.removeChild(link);
+        alert("Decrypting and downloading...");
+        closeModal();
+      });
     } catch (error) {
       console.error("Error", error);
-      alert('Failed to decrypt and download file');
+      alert("Failed to decrypt and download file");
     }
-  }
+  };
   return (
     <div>
       <ul
@@ -122,7 +132,7 @@ export const Cards = ({ fileId, receivedData, sender }) => {
                       type="file"
                       className="hidden"
                       id="file"
-                      onChange={handleFileChange}
+                      onChange={handleImageChange}
                     />
                     <span className="ml-2">Choose Image</span>
                   </label>

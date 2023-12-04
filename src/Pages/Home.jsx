@@ -10,7 +10,6 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
-        console.log(token);
         const response = await axios.get("http://ekansh515.pythonanywhere.com/apis/received_files/", {
           headers: {
             'Content-Type': 'application/json',
@@ -32,10 +31,6 @@ const Home = () => {
         <div className="w-8/12 overflow-y-auto">
 
           <h1 className="text-white text-xl mb-16">Recieved Files</h1>
-          <Cards key="1"
-            fileId="1"
-            receivedDate="Nov 23 ,2023"
-            sender="Ekansh" />
           {files.map(file => (
             <Cards
               key={file.file_id}

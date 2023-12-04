@@ -9,18 +9,14 @@ const Uploads = () => {
   const [selectedFile, setSelectedFile] = useState('');
 
   const handleFileChange = (event) => {
-    console.log("file", event.target.value)
     const file = event.target.files[0];
-    console.log("file1", file)
     const fileName = file ? file.name : '';
     setSelectedFile(fileName);
     setFile(event.target.files[0]);
   };
 
   const handleKeyImageChange = (event) => {
-    console.log("image", event.target.value)
     const image = event.target.files[0];
-    console.log("image1", image);
     const imageName = image ? image.name : '';
     setKeyImage(image);
 
@@ -34,14 +30,13 @@ const Uploads = () => {
     formData.append("image", keyImage);
     formData.append("username", name);
     formData.append('safe_code', safeCode);
-    console.log("This is form data: " + formData);
 
     const jwtToken = localStorage.getItem('token');
     if (!jwtToken) {
       console.error("JWT token is missing");
+      alert("Something went wrong");
       return;
     }
-    console.log(jwtToken)
 
     try {
       const response = await axios.post("http://ekansh515.pythonanywhere.com/apis/encrypt/", formData, {
@@ -51,8 +46,7 @@ const Uploads = () => {
         },
       });
 
-      // Handle the response as needed
-      console.log(response);
+      // Handle the response as neede
     } catch (error) {
       console.error("Error uploading:", error);
       alert("File couldn't be uploaded")
