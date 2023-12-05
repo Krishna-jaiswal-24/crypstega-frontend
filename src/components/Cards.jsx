@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import axios from "axios";
+import React, { useState } from "react";
 export const Cards = ({ fileId, receivedData, sender }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState("");
@@ -32,7 +32,7 @@ export const Cards = ({ fileId, receivedData, sender }) => {
     try {
       // Make a POST request to the API with axios
       const response = await axios.post(
-        "http://ekansh515.pythonanywhere.com/apis/decrypt/",
+        "https://crypstega.onrender.com/apis/decrypt/",
         formData,
         {
           headers: {

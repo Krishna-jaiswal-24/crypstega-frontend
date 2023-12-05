@@ -9,14 +9,18 @@ const Uploads = () => {
   const [selectedFile, setSelectedFile] = useState('');
 
   const handleFileChange = (event) => {
+
     const file = event.target.files[0];
+
     const fileName = file ? file.name : '';
     setSelectedFile(fileName);
     setFile(event.target.files[0]);
   };
 
   const handleKeyImageChange = (event) => {
+
     const image = event.target.files[0];
+
     const imageName = image ? image.name : '';
     setKeyImage(image);
 
@@ -31,22 +35,24 @@ const Uploads = () => {
     formData.append("username", name);
     formData.append('safe_code', safeCode);
 
+
     const jwtToken = localStorage.getItem('token');
     if (!jwtToken) {
       console.error("JWT token is missing");
-      alert("Something went wrong");
       return;
     }
+    console.log(jwtToken)
 
     try {
-      const response = await axios.post("http://ekansh515.pythonanywhere.com/apis/encrypt/", formData, {
+      const response = await axios.post("https://crypstega.onrender.com/apis/encrypt/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": `Bearer ${jwtToken}`,
         },
       });
 
-      // Handle the response as neede
+      // Handle the response as needed
+
     } catch (error) {
       console.error("Error uploading:", error);
       alert("File couldn't be uploaded")
@@ -78,7 +84,7 @@ const Uploads = () => {
           type="text"
           className="mr-0 p-2 border-0 rounded-lg bg-trans text-white h-12 w-48"
           placeholder="Selected Image"
-          value={keyImage}
+          value="image"
           disabled
           readOnly
         />

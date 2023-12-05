@@ -12,7 +12,7 @@ const LoginForm = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://ekansh515.pythonanywhere.com/apis/login/", {
+            const response = await axios.post("https://crypstega.onrender.com/apis/login/", {
                 username,
                 password,
             });
