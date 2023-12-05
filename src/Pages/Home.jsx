@@ -10,7 +10,7 @@ const Home = () => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get("http://ekansh515.pythonanywhere.com/apis/received_files/", {
+        const response = await axios.get("https://crypstega.onrender.com/apis/received_files/", {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,

@@ -6,7 +6,7 @@ const Navbar = () => {
     localStorage.removeItem("token");
     console.log("Logout successful!");
     navigate("/");
-    
+
   };
   return (
     <nav className="flex flex-auto justify-between items-center p-8 bg-trans">

@@ -12,7 +12,7 @@ const SignUpForm = ({ setUsername, setEmail, setPassword, }) => {
 
         try {
 
-            const response = await axios.post("http://ekansh515.pythonanywhere.com/apis/register/", {
+            const response = await axios.post("https://crypstega.onrender.com/apis/register/", {
                 username,
                 email,
                 password
@@ -20,7 +20,7 @@ const SignUpForm = ({ setUsername, setEmail, setPassword, }) => {
             console.log("Successfully registered")
             navigate("/");
 
-            const loginResponse = await axios.post("http://ekansh515.pythonanywhere.com/apis/login/", {
+            const loginResponse = await axios.post("https://crypstega.onrender.com/apis/login/", {
                 username,
                 password,
             });
