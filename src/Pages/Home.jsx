@@ -27,7 +27,7 @@ const Home = () => {
   return (
     <div className="bg">
       <Navbar />
-      <div className="flex justify-between flex-auto h-full p-12">
+      <div className="flex justify-between flex-auto h-full ">
         <div className="w-8/12 overflow-y-auto">
 
           <h1 className="text-white text-xl mb-16">Recieved Files</h1>
