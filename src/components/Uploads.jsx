@@ -49,8 +49,14 @@ const Uploads = () => {
           "Content-Type": "multipart/form-data",
           "Authorization": `Bearer ${jwtToken}`,
         },
+       
       });
-
+      alert("File uploaded successfully");
+      setFile(null);
+      setKeyImage(null);
+      setName("");
+      setSafeCode("");
+      setSelectedFile("");
       // Handle the response as needed
 
     } catch (error) {

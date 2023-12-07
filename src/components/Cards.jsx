@@ -65,7 +65,7 @@ export const Cards = ({ fileId, receivedData, sender }) => {
   return (
     <div>
       <ul
-        className="flex flex-auto justify-between flex-col flex-start p-8 bg-trans my-8 rounded-lg hover:bg-gray-400 cursor-pointer"
+        className="flex flex-auto justify-between flex-col flex-start p-8 bg-trans  rounded-lg hover:bg-gray-400 cursor-pointer"
         onClick={openModal} // Open the modal when the card is clicked
       >
         <li className="text-white">File ID: {fileId}</li>
